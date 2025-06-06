@@ -36,7 +36,7 @@ npm run dev
 
 4. Open your browser and visit:
 ```
-http://localhost:5173
+http://localhost:5174
 ```
 
 ## Project Structure
