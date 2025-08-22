@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material';
+import { CartProvider } from './CartContext';
 import CssBaseline from '@mui/material/CssBaseline';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
@@ -8,6 +9,8 @@ import Cart from './pages/Cart';
 import About from './pages/About';
 import Receipt from './pages/Receipt';
 import Offers from './pages/Offers';
+import Login from './pages/Login';
+import SignUp from './pages/SignUp';
 
 const theme = createTheme({
   palette: {
@@ -27,17 +30,21 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Router>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/menu" element={<Menu />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/receipt" element={<Receipt />} />
-          <Route path="/offers" element={<Offers />} />
-        </Routes>
-      </Router>
+      <CartProvider>
+        <Router>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/menu" element={<Menu />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/receipt" element={<Receipt />} />
+            <Route path="/offers" element={<Offers />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
+          </Routes>
+        </Router>
+      </CartProvider>
     </ThemeProvider>
   );
 }

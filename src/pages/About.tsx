@@ -1,4 +1,4 @@
-import React from 'react';
+
 import {
   Container,
   Typography,
@@ -68,7 +68,7 @@ const About = () => {
         </Typography>
         <Typography variant="body1" paragraph>
           BakeBun started with a simple mission: to serve the most delicious pizzas in town.
-          Founded in 2024, we've grown from a small local pizzeria to a beloved delivery service
+          Founded in 2025, we've grown from a small local pizzeria to a beloved delivery service
           known for our quality ingredients and exceptional customer service.
         </Typography>
         <Typography variant="body1" paragraph>
@@ -86,11 +86,9 @@ const About = () => {
           Have questions or feedback? We'd love to hear from you!
         </Typography>
         <Typography variant="body1">
-          Email: contact@bakebun.com
-          <br />
-          Phone: (555) 123-4567
-          <br />
-          Address: 123 Pizza Street, Foodville, FL 12345
+          Email: savanidaksh606@gmail.com<br />
+          Phone: 7862808466<br />
+          Address: charusat, changa, Anand, Gujarat, India
         </Typography>
       </Box>
     </Container>

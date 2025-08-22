@@ -2,6 +2,7 @@ import { Box, Typography, Paper, Grid, Divider, Button } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import { Download } from '@mui/icons-material';
 import jsPDF from 'jspdf';
+import '../assets/NotoSans-Regular-normal.js';
 
 const Receipt = () => {
   const location = useLocation();
@@ -14,6 +15,7 @@ const Receipt = () => {
 
   const downloadReceipt = () => {
     const doc = new jsPDF();
+    doc.setFont('NotoSans-Regular');
     const pageWidth = doc.internal.pageSize.getWidth();
     
     // Add header
@@ -27,9 +29,29 @@ const Receipt = () => {
     doc.setFontSize(10);
     doc.text(`Order #: ${orderDetails.orderNumber}`, 20, 40);
     doc.text(`Date: ${orderDetails.date}`, 20, 47);
-    
+    let yPosition = 54;
+    if (orderDetails.venue) {
+      doc.text(`Address: ${orderDetails.venue}`, 20, yPosition);
+      yPosition += 7;
+    }
+    if (orderDetails.promoCode) {
+      doc.text(`Promo Code: ${orderDetails.promoCode}`, 20, yPosition);
+      yPosition += 7;
+    }
+    if (orderDetails.discount && orderDetails.discount > 0) {
+      doc.text(`Discount: \u20B9${orderDetails.discount}`, 20, yPosition);
+      yPosition += 7;
+    }
+    if (orderDetails.specialInstructions) {
+      doc.text(`Instructions: ${orderDetails.specialInstructions}`, 20, yPosition);
+      yPosition += 7;
+    }
+    if (orderDetails.estimatedDeliveryTime) {
+      doc.text(`Est. Delivery: ${orderDetails.estimatedDeliveryTime} min`, 20, yPosition);
+      yPosition += 7;
+    }
     // Add items
-    let yPosition = 60;
+    yPosition += 6;
     doc.setFontSize(12);
     doc.text('Items:', 20, yPosition);
     yPosition += 10;
@@ -37,7 +59,7 @@ const Receipt = () => {
     orderDetails.items.forEach((item: any) => {
       doc.setFontSize(10);
       doc.text(`${item.name} (${item.size})`, 20, yPosition);
-      doc.text(`$${item.price.toFixed(2)} x ${item.quantity}`, pageWidth - 40, yPosition, { align: 'right' });
+      doc.text(`\u20B9${item.price} x ${item.quantity}`, pageWidth - 40, yPosition, { align: 'right' });
       yPosition += 7;
       
       if (item.toppings && item.toppings.length > 0) {
@@ -51,16 +73,16 @@ const Receipt = () => {
     yPosition += 10;
     doc.setFontSize(10);
     doc.text('Subtotal:', 20, yPosition);
-    doc.text(`$${orderDetails.total.toFixed(2)}`, pageWidth - 40, yPosition, { align: 'right' });
+    doc.text(`\u20B9${orderDetails.total}`, pageWidth - 40, yPosition, { align: 'right' });
     
     yPosition += 7;
     doc.text('Tax (10%):', 20, yPosition);
-    doc.text(`$${(orderDetails.total * 0.1).toFixed(2)}`, pageWidth - 40, yPosition, { align: 'right' });
+    doc.text(`\u20B9${Math.round(orderDetails.total * 0.1)}`, pageWidth - 40, yPosition, { align: 'right' });
     
     yPosition += 7;
     doc.setFontSize(12);
     doc.text('Total:', 20, yPosition);
-    doc.text(`$${(orderDetails.total * 1.1).toFixed(2)}`, pageWidth - 40, yPosition, { align: 'right' });
+    doc.text(`\u20B9${Math.round(orderDetails.total * 1.1)}`, pageWidth - 40, yPosition, { align: 'right' });
     
     // Add footer
     yPosition += 20;
@@ -107,10 +129,10 @@ const Receipt = () => {
             </Grid>
             <Grid item xs={4}>
               <Typography variant="body1" align="right">
-                ${item.price.toFixed(2)} x {item.quantity}
+                {item.price} x {item.quantity}
               </Typography>
               <Typography variant="body1" align="right">
-                ${(item.price * item.quantity).toFixed(2)}
+                {item.price * item.quantity}
               </Typography>
             </Grid>
           </Grid>
@@ -124,7 +146,7 @@ const Receipt = () => {
           </Grid>
           <Grid item xs={4}>
             <Typography variant="h6" align="right">
-              ${orderDetails.total.toFixed(2)}
+              {orderDetails.total}
             </Typography>
           </Grid>
         </Grid>

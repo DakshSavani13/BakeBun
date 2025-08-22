@@ -39,6 +39,9 @@ const Navbar = () => {
           <Button color="inherit" component={RouterLink} to="/about">
             About
           </Button>
+          <Button color="inherit" component={RouterLink} to="/login">
+            Login
+          </Button>
           <IconButton color="inherit" component={RouterLink} to="/cart">
             <Badge badgeContent={0} color="secondary">
               <ShoppingCart />
